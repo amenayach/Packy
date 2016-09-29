@@ -15,7 +15,7 @@ namespace Packy.Adapters
     {
 
         /// <summary>
-        /// Get object into xml
+        /// Get object from xml
         /// </summary>
         internal static T GetFile<T>(string filename) where T : class
         {

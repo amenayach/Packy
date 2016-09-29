@@ -33,7 +33,7 @@ namespace Packy.Models
         /// Represents the sources
         /// </summary>
         public List<Source> Sources { get; set; }
-        
+
         public Destination()
         {
 
@@ -54,11 +54,26 @@ namespace Packy.Models
             this.Fullname = fullname;
 
             var isDirectory = new DirectoryInfo(fullname).Exists;
+            var fileInfo = new FileInfo(fullname);
+            var isFile = fileInfo.Exists;
 
             if (isDirectory)
             {
                 this.Name = new DirectoryInfo(fullname).Name;
                 this.Title = string.IsNullOrEmpty(title) ? new DirectoryInfo(fullname).Name : title;
+            }
+            else if (isFile)
+            {
+                if (fileInfo.Directory != null)
+                {
+
+                    LoadMeta(fileInfo.Directory.FullName, title);
+
+                }
+                else
+                {
+                    throw new Exception("Destination should be a folder");
+                }
             }
             else
             {
@@ -66,5 +81,18 @@ namespace Packy.Models
             }
         }
 
+    }
+
+    public class DestinationComparer : IEqualityComparer<Destination>
+    {
+        public bool Equals(Destination x, Destination y)
+        {
+            return x != null && y != null && String.Equals(x.Fullname, y.Fullname, StringComparison.CurrentCultureIgnoreCase);
+        }
+
+        public int GetHashCode(Destination obj)
+        {
+            return 0;
+        }
     }
 }
