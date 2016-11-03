@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\packyicon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -56,6 +59,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Destination.cs" />
+    <Compile Include="Models\FlatProject.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\Source.cs" />
     <Compile Include="Program.cs" />
@@ -66,6 +70,15 @@
     <Compile Include="UserControls\DestinationUserControl.Designer.cs">
       <DependentUpon>DestinationUserControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\ProjectUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\ProjectUserControl.Designer.cs">
+      <DependentUpon>ProjectUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\Async.cs" />
+    <Compile Include="Utils\ControlMod.cs" />
+    <Compile Include="Utils\CopyDir.cs" />
     <Compile Include="Utils\EnumerableManager.cs" />
     <Compile Include="Utils\ErrorManager.cs" />
     <Compile Include="Utils\IoManager.cs" />
@@ -80,9 +93,13 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="UserControls\DestinationUserControl.resx">
       <DependentUpon>DestinationUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\ProjectUserControl.resx">
+      <DependentUpon>ProjectUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -96,6 +113,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\packyicon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

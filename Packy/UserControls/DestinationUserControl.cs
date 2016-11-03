@@ -29,7 +29,7 @@ namespace Packy.UserControls
             {
                 e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Copy : DragDropEffects.None;
             }
-            catch (Exception ex)
+            catch
             {
                 //Ignored
             }
@@ -61,7 +61,7 @@ namespace Packy.UserControls
 
                 var files = IoManager.BrowseFiles();
 
-                if (files.NotEmpty())
+                if (ControlMod.NotEmpty(files))
                 {
 
                     AddDestinations(files);
@@ -71,7 +71,7 @@ namespace Packy.UserControls
             }
             catch (Exception ex)
             {
-                ex.PromptMsg();
+                ControlMod.PromptMsg(ex);
             }
         }
 
@@ -83,7 +83,7 @@ namespace Packy.UserControls
                 destinations = new List<Destination>();
             }
 
-            if (files.NotEmpty())
+            if (ControlMod.NotEmpty(files))
             {
 
                 foreach (var file in files)
