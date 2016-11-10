@@ -28,17 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.grd = new System.Windows.Forms.DataGridView();
-            this.FSrc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FDest = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lblStatus = new System.Windows.Forms.Label();
             this.lblDestDrop = new System.Windows.Forms.Label();
             this.lblSrcDrop = new System.Windows.Forms.Label();
             this.btnPublish = new System.Windows.Forms.Button();
             this.tbProjectName = new System.Windows.Forms.TextBox();
             this.btnDelete = new System.Windows.Forms.Button();
+            this.FSrc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FFlag = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FDest = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grd)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,45 +51,36 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.grd.BackgroundColor = System.Drawing.Color.Black;
             this.grd.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.Gray;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grd.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Gray;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grd.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.grd.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grd.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.FSrc,
+            this.FFlag,
             this.FDest});
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.Gray;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.grd.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Gray;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.grd.DefaultCellStyle = dataGridViewCellStyle2;
             this.grd.Location = new System.Drawing.Point(32, 47);
             this.grd.Name = "grd";
             this.grd.Size = new System.Drawing.Size(686, 282);
             this.grd.TabIndex = 11;
+            this.grd.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.grd_CellPainting);
+            this.grd.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.grd_CellValueChanged);
             this.grd.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainForm_DragDrop);
             this.grd.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainForm_DragEnter);
             this.grd.Resize += new System.EventHandler(this.grd_Resize);
-            // 
-            // FSrc
-            // 
-            this.FSrc.HeaderText = "Src";
-            this.FSrc.Name = "FSrc";
-            this.FSrc.Width = 200;
-            // 
-            // FDest
-            // 
-            this.FDest.HeaderText = "Dest";
-            this.FDest.Name = "FDest";
-            this.FDest.Width = 200;
             // 
             // lblStatus
             // 
@@ -170,6 +162,24 @@
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
+            // FSrc
+            // 
+            this.FSrc.HeaderText = "Src";
+            this.FSrc.Name = "FSrc";
+            this.FSrc.Width = 200;
+            // 
+            // FFlag
+            // 
+            this.FFlag.HeaderText = "FFlag";
+            this.FFlag.Name = "FFlag";
+            this.FFlag.Visible = false;
+            // 
+            // FDest
+            // 
+            this.FDest.HeaderText = "Dest";
+            this.FDest.Name = "FDest";
+            this.FDest.Width = 200;
+            // 
             // ProjectUserControl
             // 
             this.AllowDrop = true;
@@ -198,13 +208,14 @@
         #endregion
 
         private System.Windows.Forms.DataGridView grd;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FSrc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FDest;
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.Label lblDestDrop;
         private System.Windows.Forms.Label lblSrcDrop;
         private System.Windows.Forms.Button btnPublish;
         private System.Windows.Forms.TextBox tbProjectName;
         private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FSrc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FFlag;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FDest;
     }
 }

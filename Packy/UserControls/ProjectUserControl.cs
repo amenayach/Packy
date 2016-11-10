@@ -206,7 +206,7 @@ namespace Packy.UserControls
 
                 foreach (DataGridViewRow row in grd.Rows)
                 {
-                    row.DefaultCellStyle.BackColor = Color.White;
+                    grd.sg(row.Index, FFlag, 0);
                     lblStatus.Text = "";
                     Application.DoEvents();
                     try
@@ -219,8 +219,7 @@ namespace Packy.UserControls
                         {
                             try
                             {
-                                CopyDir.Copy(fullname, grd.gg(tempRow, FDest).ToString());
-                                return true;
+                                return CopyDir.Copy(fullname, grd.gg(tempRow, FDest).ToString());
                             }
                             catch
                             {
@@ -228,14 +227,14 @@ namespace Packy.UserControls
                             }
                         }, (bool success) =>
                         {
-                            tempRow.DefaultCellStyle.BackColor = success ? Color.DarkGreen : Color.DarkRed;
+                            grd.sg(tempRow.Index, FFlag, success ? 1 : -1);
                             Application.DoEvents();
                         });
 
                     }
                     catch
                     {
-                        row.DefaultCellStyle.BackColor = Color.DarkRed;
+                        grd.sg(row.Index, FFlag, -1);
                     }
                 }
             }
@@ -245,7 +244,7 @@ namespace Packy.UserControls
             }
 
             grd.AllowUserToAddRows = true;
-            lblStatus.Text = "Done";
+            //lblStatus.Text = "Done";
             Application.DoEvents();
 
         }
@@ -274,6 +273,36 @@ namespace Packy.UserControls
                     // Ignored
                 }
             }
+        }
+
+        private void grd_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.ColumnIndex < 0 && e.RowIndex >= 0 && !grd.Rows[e.RowIndex].IsNewRow)
+            {
+
+                var flag = grd.gg(e.RowIndex, FFlag) as int?;
+                e.Graphics.FillRectangle(Brushes.White, e.CellBounds);
+
+                if (flag >= 1)
+                {
+
+                    e.Graphics.DrawImage(Properties.Resources.checkicon, e.CellBounds.X + 14, e.CellBounds.Y + 1,
+                        e.CellBounds.Height - 4, e.CellBounds.Height - 4);
+
+                }
+                else if (flag == -1)
+                {
+                    e.Graphics.DrawImage(Properties.Resources.erroricon, e.CellBounds.X + 14, e.CellBounds.Y + 1,
+                     e.CellBounds.Height - 4, e.CellBounds.Height - 4);
+                }
+
+                e.Handled = true;
+            }
+        }
+
+        private void grd_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            grd.Invalidate();
         }
     }
 }

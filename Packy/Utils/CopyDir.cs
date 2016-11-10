@@ -6,42 +6,66 @@ namespace Packy.Utils
 
     public class CopyDir
     {
-        public static void Copy(string sourceDirectory, string targetDirectory)
+        public static bool Copy(string sourceDirectory, string targetDirectory)
         {
-
-            if (Directory.Exists(sourceDirectory))
+            try
             {
 
-                DirectoryInfo diSource = new DirectoryInfo(sourceDirectory);
-                DirectoryInfo diTarget = new DirectoryInfo(targetDirectory);
+                if (Directory.Exists(sourceDirectory))
+                {
 
-                CopyAll(diSource, diTarget);
+                    DirectoryInfo diSource = new DirectoryInfo(sourceDirectory);
+                    DirectoryInfo diTarget = new DirectoryInfo(targetDirectory);
+
+                    return CopyAll(diSource, diTarget);
+
+                }
+                else if (File.Exists(sourceDirectory))
+                {
+                    var fi = new FileInfo(sourceDirectory);
+                    fi.CopyTo(Path.Combine(targetDirectory, fi.Name), true);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
 
             }
-            else if (File.Exists(sourceDirectory))
+            catch
             {
-                var fi = new FileInfo(sourceDirectory);
-                fi.CopyTo(Path.Combine(targetDirectory, fi.Name), true);
+                return false;
             }
 
         }
 
-        private static void CopyAll(DirectoryInfo source, DirectoryInfo target)
+        private static bool CopyAll(DirectoryInfo source, DirectoryInfo target)
         {
-            Directory.CreateDirectory(target.FullName);
-
-            // Copy each file into the new directory.
-            foreach (FileInfo fi in source.GetFiles())
+            try
             {
-                fi.CopyTo(Path.Combine(target.FullName, fi.Name), true);
+
+                Directory.CreateDirectory(target.FullName);
+
+                // Copy each file into the new directory.
+                foreach (FileInfo fi in source.GetFiles())
+                {
+                    fi.CopyTo(Path.Combine(target.FullName, fi.Name), true);
+                }
+
+                // Copy each subdirectory using recursion.
+                foreach (DirectoryInfo diSourceSubDir in source.GetDirectories())
+                {
+                    DirectoryInfo nextTargetSubDir =
+                        target.CreateSubdirectory(diSourceSubDir.Name);
+                    CopyAll(diSourceSubDir, nextTargetSubDir);
+                }
+
+                return true;
+
             }
-
-            // Copy each subdirectory using recursion.
-            foreach (DirectoryInfo diSourceSubDir in source.GetDirectories())
+            catch
             {
-                DirectoryInfo nextTargetSubDir =
-                    target.CreateSubdirectory(diSourceSubDir.Name);
-                CopyAll(diSourceSubDir, nextTargetSubDir);
+                return false;
             }
         }
 
