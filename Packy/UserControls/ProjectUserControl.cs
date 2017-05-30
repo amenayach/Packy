@@ -206,7 +206,7 @@ namespace Packy.UserControls
 
                 foreach (DataGridViewRow row in grd.Rows)
                 {
-                    grd.sg(row.Index, FFlag, 0);
+                    grd.sg(row.Index, FFlag, 2);
                     lblStatus.Text = "";
                     Application.DoEvents();
                     try
@@ -283,7 +283,14 @@ namespace Packy.UserControls
                 var flag = grd.gg(e.RowIndex, FFlag) as int?;
                 e.Graphics.FillRectangle(Brushes.White, e.CellBounds);
 
-                if (flag >= 1)
+                if (flag >= 2)
+                {
+
+                    e.Graphics.DrawImage(Properties.Resources.hourglass, e.CellBounds.X + 14, e.CellBounds.Y + 1,
+                        e.CellBounds.Height - 4, e.CellBounds.Height - 4);
+
+                }
+                else if (flag >= 1)
                 {
 
                     e.Graphics.DrawImage(Properties.Resources.checkicon, e.CellBounds.X + 14, e.CellBounds.Y + 1,
