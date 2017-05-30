@@ -11,3 +11,5 @@ $ packy.exe -proj=ProjectName -pub
 ```sh
 [-pub] to publish on load the specific project where [-proj=<ProjectName>]
 ```
+
+![Packy](https://www.dropbox.com/s/v8y4q97hkmvezkl/packyshot.png?dl=1)
